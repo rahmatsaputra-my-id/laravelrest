@@ -33,7 +33,7 @@ class verifyEmail extends Mailable
     {
         $address = 'noreply.verifyotp@gmail.com';
         $subjectVar = 'Validation your Account';
-        $name = 'Rahmatteo';
+        $name = 'Google';
 
         return $this->view('emails.test')
                     ->from($address, $name)
