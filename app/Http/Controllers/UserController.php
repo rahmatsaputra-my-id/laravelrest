@@ -21,37 +21,51 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'phone' => 'required|string|max:255',
             'password' => 'required|string|min:6|confirmed',
-        ]);
-        $meta = ['http_status_code' => 400];
+            ]);
         $errorsValidator = $validator->errors();
-        $status = ['developer_message' => $errorsValidator, 'system_message' => 'Conflict','code_detail' => 409];
+        $failedRegister =[
+            'status' => [['developer_message' => $errorsValidator, 'system_message' => 'Conflict','code_detail' => 409]],
+            'meta' => ['http_status_code' => 400]
+        ];
+        $errorsHeader = [
+            'status' => [['developer_message' => 'Missing some headers keys', 'system_message' => 'Not Found','code' => 404]],
+            'meta' => ['http_status_code' => 400]
+        ];
+        $successRegister =[
+            'status' => [['developer_message' => 'Successfully created '.$request->get('email').', check your email to verify.', 'system_message' => 'Created','code_detail' => 201]],
+            'meta' => ['http_status_code' => 200]
+        ];
 
+        if($request != null){
+            try{
+                if($validator->fails()){
+                    return response()->json($failedRegister, 400);
+                }
+        
+                // Mail
+                $verifyNumber = mt_rand(100000, 999999);
+                $messageData =['message' => 'R - '.$verifyNumber.' is your account validation code.'];
+                Mail::to($request->get('email'))->send(new verifyEmail($messageData));
+        
+                $usr = User::create([
+                    'username' => $request->get('username'),
+                    'email' => $request->get('email'),
+                    'password' => Hash::make($request->get('password')),
+                    'noVerify' => $verifyNumber,
+                    'countFailed' => 0,
+                    'phone' => $request->get('phone'),
+                    'isVerified' => "FALSE"
+                ]);
+        
+                // $tokenVerify = JWTAuth::fromUser($usr);
+                
+                return response()->json($successRegister,200);
 
-        if($validator->fails()){
-            return response()->json(compact('status','meta'), 400);
+            } catch (JWTException $e) {
+                return response()->json($systemError, 500);
+            }
         }
-
-        //mail
-        $verifyNumber = mt_rand(100000, 999999);
-        $messageData =['message' => 'R - '.$verifyNumber.' is your account validation code.'];
-        Mail::to($request->get('email'))->send(new verifyEmail($messageData));
-
-        $usr = User::create([
-            'username' => $request->get('username'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-            'noVerify' => $verifyNumber,
-            'countFailed' => 0,
-            'phone' => $request->get('phone'),
-            'isVerified' => "FALSE"
-        ]);
-
-//        $tokenVerify = JWTAuth::fromUser($usr);
-        $status = [['developer_message' => 'Successfully created '.$request->get('email').', check your email to verify.', 'system_message' => 'Created','code_detail' => 201]];
-        $meta = ['http_status_code' => 200];
-
-//        return response()->json(compact('status','meta','user','tokenVerify'),201);
-        return response()->json(compact('status','meta'),200);
+        return response()->json($errorsHeader,400);
     }
 
     public function verifyEmail(Request $request)
@@ -80,12 +94,16 @@ class UserController extends Controller
             'status' => [['developer_message' => 'Maximum failed OTP attempts reached, Please wait xx minutes and check email for new code', 'system_message' => 'Too many request', 'code_detail' => 429]],
             'meta' => ['http_status_code' => 400]
         ];
+        $errorsHeader = [
+            'status' => [['developer_message' => 'Missing some headers keys', 'system_message' => 'Not Found','code' => 404]],
+            'meta' => ['http_status_code' => 400]
+        ];
 
         $requestEmail = $request->get('email');
         $requestNoVerify = $request->get('noVerify');
         $dataEmailRequest = User::where('email','=', $requestEmail)->first();
 
-        if ($request !=null){
+        if ($request != null){
             try{
                 if ($request->get('email') != null &&
                     $request->get('noVerify') != null
@@ -136,7 +154,7 @@ class UserController extends Controller
                     }
                     return response()->json($notFoundEmailinDb, 400);
                 }
-                return response()->json($errors, 400);
+                return response()->json($errorsHeader, 400);
             }catch (JWTException $e) {
                 return response()->json($systemError, 500);
             }
@@ -146,20 +164,28 @@ class UserController extends Controller
 
     public function resendVerifyEmail(Request $request){
         $failedVerified = [
-            'errors' => [['message' => 'Unauthorized','code' => 10001]],
-            'meta' => ['http_status' => 401]
+            'status' => [['developer_message' => 'Unauthorized', 'system_message' => 'Unauthorized','code' => 401]],
+            'meta' => ['http_status_code' => 400]
+        ];
+        $systemError = [
+            'status' => [['developer_message' => 'System Error', 'system_message' => 'Internal server error','code_detail' => 401]],
+            'meta' => ['http_status_code' => 500]
         ];
         $notFoundEmailinDb = [
-            'errors' => [['message' => 'Not Found','code' => 10004]],
-            'meta' => ['http_status' => 404]
+            'status' => [['developer_message' => 'Not Found', 'system_message' => 'Not Found','code' => 404]],
+            'meta' => ['http_status_code' => 400]
         ];
         $successVerified = [
-            'status' => [['message' => 'Successfully Reset OTP','code' => 10000]],
-            'meta' => ['http_status' => 200]
+            'status' => [['developer_message' => 'Successfully Reset OTP', 'system_message' => 'OK','code' => 200]],
+            'meta' => ['http_status_code' => 200]
         ];
         $errors = [
-            'errors' => [['message' => 'Not Found','code' => 10004]],
-            'meta' => ['http_status' => 404]
+            'status' => [['developer_message' => 'Not Found', 'system_message' => 'Not Found','code' => 404]],
+            'meta' => ['http_status_code' => 400]
+        ];
+        $errorsHeader = [
+            'status' => [['developer_message' => 'Missing some headers keys', 'system_message' => 'Not Found','code' => 404]],
+            'meta' => ['http_status_code' => 400]
         ];
 
         $requestEmail = $request->get('email');
@@ -183,35 +209,35 @@ class UserController extends Controller
                             Mail::to($request->get('email'))->send(new verifyEmail($messageData));
                             return response()->json($successVerified,200);
                         }
-                        return response()->json($errors, 404);
+                        return response()->json($errors, 400);
                     }
-                    return response()->json($notFoundEmailinDb, 404);
+                    return response()->json($notFoundEmailinDb, 400);
                 }catch (JWTException $e) {
-                    return response()->json($failedVerified, 500);
+                    return response()->json($systemError, 500);
                 }
             }
-            return response()->json($failedVerified, 401);
+            return response()->json($failedVerified, 400);
         }
-        return response()->json($errors, 404);
+        return response()->json($errorsHeader, 400);
     }
 
     public function login(Request $request)
     {
         $failedLogin = [
-            'errors' => [['message' => 'Unauthorized','code' => 10001]],
-            'meta' => ['http_status' => 401]
+            'errors' => [['message' => 'Unauthorized','detail_code' => 10001]],
+            'meta' => ['http_status_code' => 401]
         ];
         $noVerified = [
-            'errors' => [['message' => 'Unverified Acoount','code' => 10001]],
-            'meta' => ['http_status' => 401]
+            'errors' => [['message' => 'Unverified Acoount','detail_code' => 10001]],
+            'meta' => ['http_status_code' => 401]
         ];
         $failedCreateToken = [
-            'errors' => [['message' => 'Could Not Create Token','code' => 50000]],
-            'meta' => ['http_status' => 500]
+            'errors' => [['message' => 'Could Not Create Token','detail_code' => 50000]],
+            'meta' => ['http_status_code' => 500]
         ];
         $credentials = $request->only('username', 'password');
-        $status = [['message' => 'OK','code' => 10000]];
-        $meta = ['http_status' => 200];
+        $status = [['message' => 'OK','detail_code' => 10000]];
+        $meta = ['http_status_code' => 200];
 
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
@@ -271,8 +297,8 @@ class UserController extends Controller
     public function logout()
     {
         $dataSuccess = [
-            'status' => [['message' => 'OK','code' => 10000]],
-            'meta' => ['http_status' => 200],
+            'status' => [['system_message' => 'OK','detail_code' => 10000]],
+            'meta' => ['http_status_code' => 200],
         ];
         $token = compact('token');
         JWTAuth::parseToken()->invalidate( $token );
@@ -283,23 +309,23 @@ class UserController extends Controller
     public function getAuthenticatedUser()
     {
         $errors = [
-            'errors' => [['message' => 'Not Found','code' => 10004]],
-            'meta' => ['http_status' => 404]
+            'errors' => [['system_message' => 'Not Found','detail_code' => 10004]],
+            'meta' => ['http_status_code' => 404]
         ];
         $tokenExpired = [
-            'errors' => [['message' => 'Token Expired','code' => 10004]],
-            'meta' => ['http_status' => 401]
+            'errors' => [['message' => 'Token Expired','detail_code' => 10004]],
+            'meta' => ['http_status_code' => 401]
         ];
         $tokenInvalid = [
-            'errors' => [['message' => 'Token Invalid','code' => 10001]],
-            'meta' => ['http_status' => 401]
+            'errors' => [['message' => 'Token Invalid','detail_code' => 10001]],
+            'meta' => ['http_status_code' => 401]
         ];
         $tokenAbsent = [
-            'errors' => [['message' => 'Token Absent','code' => 10004]],
-            'meta' => ['http_status' => 401]
+            'errors' => [['message' => 'Token Absent','detail_code' => 10004]],
+            'meta' => ['http_status_code' => 401]
         ];
-        $status = [['message' => 'OK','code' => 10000]];
-        $meta = ['http_status' => 200];
+        $status = [['message' => 'OK','detail_code' => 10000]];
+        $meta = ['http_status_code' => 200];
         try {
 
             if (! $user = JWTAuth::parseToken()->authenticate()) {
