@@ -20,28 +20,26 @@ class JwtMiddleware extends BaseMiddleware
     public function handle($request, Closure $next)
     {
         $errorsTokenInvalid = [
-            'errors' => [['message' => 'Token is Invalid','code' => 10001]],
-            'meta' => ['http_status' => 401]    
+            'status' => ['messages' => ['subject' => 'failed', 'system' => 'Bad Request', 'user' => 'Token is invalid'], 'code_detail' => 401],
+            'meta' => ['http_status_code' => 400]
         ];
-
         $errorsTokenExpired = [
-            'errors' => [['message' => 'Token Expired','code' => 10001]],
-            'meta' => ['http_status' => 401]    
+            'status' => ['messages' => ['subject' => 'failed', 'system' => 'Bad Request', 'user' => 'Token expired'], 'code_detail' => 401],
+            'meta' => ['http_status_code' => 400]
         ];
-
         $errorsTokenNotFound = [
-            'errors' => [['message' => 'Unauthorized','code' => 10001]],
-            'meta' => ['http_status' => 401]    
+            'status' => ['messages' => ['subject' => 'failed', 'system' => 'Bad Request', 'user' => 'Token unauthorized'], 'code_detail' => 401],
+            'meta' => ['http_status_code' => 400]
         ];
 
         try {
             $user = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
-            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
+            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
                 return response()->json($errorsTokenInvalid);
-            }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
+            } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
                 return response()->json($errorsTokenExpired);
-            }else{
+            } else {
                 return response()->json($errorsTokenNotFound);
             }
         }
