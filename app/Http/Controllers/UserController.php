@@ -28,11 +28,11 @@ class UserController extends Controller
       'meta' => ['http_status_code' => 400]
     ];
     $errorsHeader = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Bad Request', 'user' => 'Missing some headers keys.'], 'code_detail' => 400],
+      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Bad Request', 'user' => 'Missing some headers keys'], 'code_detail' => 400],
       'meta' => ['http_status_code' => 400]
     ];
     $successRegister = [
-      'status' => ['messages' => ['subject' => 'success', 'system' => 'Created', 'user' => 'Successfully created ' . $request->get('email') . ', check your email to verify.'], 'code_detail' => 201],
+      'status' => ['messages' => ['subject' => 'success', 'system' => 'Created', 'user' => 'Successfully created ' . $request->get('email') . ', check your email to verify'], 'code_detail' => 201],
       'user',
       'meta' => ['http_status_code' => 200]
     ];
@@ -82,7 +82,7 @@ class UserController extends Controller
       'meta' => ['http_status_code' => 500]
     ];
     $successVerified = [
-      'status' => ['messages' => ['subject' => 'success', 'system' => 'OK', 'user' => 'Successfully Verify Account.'], 'code_detail' => 200],
+      'status' => ['messages' => ['subject' => 'success', 'system' => 'OK', 'user' => 'Successfully Verify Account'], 'code_detail' => 200],
       'meta' => ['http_status_code' => 200]
     ];
     $errors = [
@@ -90,15 +90,15 @@ class UserController extends Controller
       'meta' => ['http_status_code' => 400]
     ];
     $notFoundEmailinDb = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Not Found', 'user' => 'Please recheck your email.'], 'code_detail' => 404],
+      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Not Found', 'user' => 'Please recheck your email'], 'code_detail' => 404],
       'meta' => ['http_status_code' => 400]
     ];
     $resetVerify = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Too many request', 'user' => 'Maximum failed OTP attempts reached, Please wait xx minutes and check email for new code.'], 'code_detail' => 429],
+      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Too many request', 'user' => 'Maximum failed OTP attempts reached, Please wait xx minutes and check email for new code'], 'code_detail' => 429],
       'meta' => ['http_status_code' => 400]
     ];
     $errorsHeader = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Bad Request', 'user' => 'Missing some headers keys.'], 'code_detail' => 404],
+      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Bad Request', 'user' => 'Missing some headers keys'], 'code_detail' => 404],
       'meta' => ['http_status_code' => 400]
     ];
 
@@ -236,17 +236,17 @@ class UserController extends Controller
       'meta' => ['http_status_code' => 400]
     ];
     $noVerified = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unauthorized', 'user' => 'Verify your account via email.'], 'code_detail' => 401],
+      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unauthorized', 'user' => 'Please verify your account via email'], 'code_detail' => 401],
       'meta' => ['http_status_code' => 400]
     ];
     $failedCreateToken = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Internal Server Errors', 'user' => 'Could not create token.'], 'code_detail' => 500],
+      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Internal Server Errors', 'user' => 'Could not create token'], 'code_detail' => 500],
       'meta' => ['http_status_code' => 500]
     ];
     $credentials = $request->only('username', 'password');
     $token = JWTAuth::attempt($credentials);
     $successLogin = [
-      'status' => ['messages' => ['subject' => 'success', 'system' => 'OK', 'user' => 'Successfully login.'], 'code_detail' => 200],
+      'status' => ['messages' => ['subject' => 'success', 'system' => 'OK', 'user' => 'Successfully login'], 'code_detail' => 200],
       'meta' => ['http_status_code' => 200],
       'token' => $token
     ];
@@ -309,7 +309,7 @@ class UserController extends Controller
   public function logout()
   {
     $dataSuccess = [
-      'status' => ['messages' => ['subject' => 'success', 'system' => 'OK', 'user' => 'Successfully logout.'], 'code_detail' => 200],
+      'status' => ['messages' => ['subject' => 'success', 'system' => 'OK', 'user' => 'Successfully logout'], 'code_detail' => 200],
       'meta' => ['http_status_code' => 200],
     ];
     $token = JWTAuth::parseToken()->authenticate();
@@ -324,21 +324,9 @@ class UserController extends Controller
       'status' => ['messages' => ['subject' => 'failed', 'system' => 'Not Found', 'user' => 'Not Found'], 'code_detail' => 404],
       'meta' => ['http_status_code' => 400]
     ];
-    $tokenExpired = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unauthorized', 'user' => 'Token Expired'], 'code_detail' => 401],
-      'meta' => ['http_status_code' => 400]
-    ];
-    $tokenInvalid = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unauthorized', 'user' => 'Token Invalid'], 'code_detail' => 401],
-      'meta' => ['http_status_code' => 400]
-    ];
-    $tokenAbsent = [
-      'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unauthorized', 'user' => 'Token Absent'], 'code_detail' => 401],
-      'meta' => ['http_status_code' => 400]
-    ];
     $user = JWTAuth::parseToken()->authenticate();
     $successGetUser = [
-      'status' => ['messages' => ['subject' => 'success', 'system' => 'OK', 'user' => 'Successfully get users.'], 'code_detail' => 200],
+      'status' => ['messages' => ['subject' => 'success', 'system' => 'OK', 'user' => 'Successfully get users'], 'code_detail' => 200],
       'meta' => ['http_status_code' => 200],
       'user' => $user
     ];
