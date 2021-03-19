@@ -20,8 +20,8 @@ class CreateBooksTable extends Migration
             $table->string('source');
             $table->text('description');
             $table->text('url')->nullable();
-            $table->text('imageName')->nullable();
-            $table->text('urlToImage')->nullable();
+            $table->text('image_name')->nullable();
+            $table->text('url_to_image')->nullable();
             $table->timestamps();
         });
     }

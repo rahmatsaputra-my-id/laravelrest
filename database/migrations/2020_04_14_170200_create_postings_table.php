@@ -19,11 +19,11 @@ class CreatePostingsTable extends Migration
             $table->string('author');
             $table->text('description');
             $table->text('url')->nullable();
-            $table->text('imageName')->nullable();
-            $table->text('urlToImage')->nullable();
+            $table->text('image_name')->nullable();
+            $table->text('url_to_image')->nullable();
             $table->text('category')->nullable();
             $table->string('tag')->nullable();
-            $table->integer('countHit')->nullable();
+            $table->integer('count_hit')->nullable();
             $table->timestamps();
         });
     }

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register', 'UserController@register');
 Route::post('loginApp', 'UserController@login');
+Route::post('forgotPasswordValidation', 'UserController@forgotPasswordValidation');
 Route::post('verifyEmail', 'UserController@verifyEmail');
 Route::post('resendVerifyEmail', 'UserController@resendVerifyEmail');
 Route::post('logout', 'UserController@logout')->middleware('jwt.verify');

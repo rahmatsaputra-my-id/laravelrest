@@ -17,10 +17,12 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('email')->unique();
-            $table->string('isVerified');
-            $table->integer('noVerify')->nullable();
-            $table->integer('countFailed');
+            $table->string('is_verified');
+            $table->integer('verify_code')->nullable();
+            $table->integer('count_failed');
             $table->string('phone');
+            $table->string('tag');
+            $table->string('account_type');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
