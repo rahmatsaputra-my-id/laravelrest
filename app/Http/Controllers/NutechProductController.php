@@ -258,7 +258,7 @@ class NutechProductController extends Controller
    public function putNutechProductById(Request $request, $id)
    {
       $validator = Validator::make($request->all(), [
-         'product_name' => 'required|string|max:255|unique:nutech_products',
+         'product_name' => 'required|string|max:255',
          'purchase_price' => 'required|integer',
          'selling_price' => 'required|integer',
          'stock' => 'required|integer',
