@@ -53,4 +53,13 @@ Route::patch('books/{id}', 'BookController@putBookById')->middleware('jwt.verify
 Route::delete('books/{id}', 'BookController@deleteBookById')->middleware('jwt.verify');
 Route::delete('books', 'BookController@deleteBooks')->middleware('jwt.verify');
 
+//Nutech Product
+Route::post('nutech/product/', 'NutechProductController@postNutechProduct');
+Route::get('nutech/product', 'NutechProductController@getNutechProduct');
+Route::get('nutech/product/{id}', 'NutechProductController@getNutechProductById');
+Route::patch('nutech/product/{id}', 'NutechProductController@putNutechProductById');
+Route::delete('nutech/product/{id}', 'NutechProductController@deleteNutechProductById');
+Route::delete('nutech/product', 'NutechProductController@deleteNutechProduct');
+
+
 Route::get('user', 'UserController@getAuthenticatedUser')->middleware('jwt.verify');
