@@ -402,7 +402,6 @@ class BookController extends Controller
 		];
 		$deleteBooksList = Books::whereNotNull('id');
 
-
 		if ($request != null) {
 			if ($idSelected != null) {
 				if ($wordCount > 0) {
