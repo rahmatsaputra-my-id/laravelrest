@@ -220,7 +220,7 @@ class NutechProductController extends Controller
                   return response()->json($errors, 400);
                }
             }
-            $nutechProduct = NutechProduct::orderBy('id', 'desc')->paginate(5);
+            $nutechProduct = NutechProduct::orderBy('id', 'desc')->paginate(20);
             $custom = collect($dataSuccess);
             $pagination = $custom->merge($nutechProduct);
 
