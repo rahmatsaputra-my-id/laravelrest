@@ -67,10 +67,12 @@ class NutechProductController extends Controller
          }
 
          // buat local
-         $pathSave = public_path() . "/fileUpload";
+         $pathUpload = public_path() . "/Public/File";
+         $pathDownload = public_path() . "/public/file";
 
-         //buat staging
-         // $pathSave = "https://staging.rahmatsaputra.my.id" . "/public/fileUpload";
+         // buat staging
+         // $pathUpload = public_path() . '/Public/File';
+         // $pathDownload = "https://staging.rahmatsaputra.my.id" . "/app/public/file/";
 
          if (
             $filenya->getClientOriginalExtension() != 'jpg' &&
@@ -95,10 +97,9 @@ class NutechProductController extends Controller
             'selling_price' => $request->get('selling_price'),
             'stock' => $request->get('stock'),
             'image_name' => $filenya->getClientOriginalName(),
-            'url_to_image' => $pathSave
+            'url_to_image' => $pathDownload . $filenya->getClientOriginalName()
          ]);
-
-         $filenya->move($pathSave, $filenya->getClientOriginalName());
+         $filenya->move($pathUpload, $filenya->getClientOriginalName());
 
          return response()->json($dataSuccess, 200);
       }
@@ -329,10 +330,12 @@ class NutechProductController extends Controller
                }
 
                // buat local
-               $pathSave = public_path() . "/fileUpload";
+               $pathUpload = public_path() . "/Public/File";
+               $pathDownload = public_path() . "/public/file";
 
-               //buat staging
-               // $pathSave = "https://staging.rahmatsaputra.my.id" . "/public/fileUpload";
+               // buat staging
+               // $pathUpload = public_path() . '/Public/File';
+               // $pathDownload = "https://staging.rahmatsaputra.my.id" . "/app/public/file/";
 
                if (
                   $filenya->getClientOriginalExtension() != 'jpg' &&
@@ -358,9 +361,10 @@ class NutechProductController extends Controller
                   'selling_price' => $request->get('selling_price'),
                   'stock' => $request->get('stock'),
                   'image_name' => $filenya->getClientOriginalName(),
-                  'url_to_image' => $pathSave
+                  'url_to_image' => $pathDownload . $filenya->getClientOriginalName()
                ]);
-               $filenya->move($pathSave, $filenya->getClientOriginalName());
+               $filenya->move($pathUpload, $filenya->getClientOriginalName());
+               
                return response()->json($dataSuccess, 200);
             }
             return response()->json($errorsPut, 400);
