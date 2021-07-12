@@ -67,11 +67,11 @@ class NutechProductController extends Controller
          }
 
          // buat local
-         $pathUpload = public_path() . "/Public/File";
+         $pathUpload = public_path() . "/public/file";
          $pathDownload = public_path() . "/public/file";
 
          // buat staging
-         // $pathUpload = public_path() . '/Public/File';
+         // $pathUpload = public_path() . '/public/file';
          // $pathDownload = "https://staging.rahmatsaputra.my.id" . "/app/public/file/";
 
          if (
@@ -330,11 +330,11 @@ class NutechProductController extends Controller
                }
 
                // buat local
-               $pathUpload = public_path() . "/Public/File";
+               $pathUpload = public_path() . "/public/file";
                $pathDownload = public_path() . "/public/file";
 
                // buat staging
-               // $pathUpload = public_path() . '/Public/File';
+               // $pathUpload = public_path() . '/public/file';
                // $pathDownload = "https://staging.rahmatsaputra.my.id" . "/app/public/file/";
 
                if (
