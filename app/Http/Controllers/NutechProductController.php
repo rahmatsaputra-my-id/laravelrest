@@ -135,19 +135,19 @@ class NutechProductController extends Controller
          ->orWhere('purchase_price', 'like', "%{$q}%")
          ->orWhere('selling_price', 'like', "%{$q}%")
          ->orWhere('stock', 'like', "%{$q}%")
-         ->paginate(5);
+         ->paginate((int) $request->get('per_page'));
 
       $search_drivers_product_name = NutechProduct::where('product_name', 'like', "%{$product_name}%")
-         ->paginate(5);
+         ->paginate((int) $request->get('per_page'));
 
       $search_drivers_purchase_price = NutechProduct::where('purchase_price', 'like', "%{$purchase_price}%")
-         ->paginate(5);
+         ->paginate((int) $request->get('per_page'));
 
       $search_drivers_selling_price = NutechProduct::where('selling_price', 'like', "%{$selling_price}%")
-         ->paginate(5);
+         ->paginate((int) $request->get('per_page'));
 
       $search_drivers_stock = NutechProduct::where('stock', 'like', "%{$stock}%")
-         ->paginate(5);
+         ->paginate((int) $request->get('per_page'));
 
       $searchCountKeywords = $search_drivers_keywords->count();
       $searchCountProductName = $search_drivers_product_name->count();
