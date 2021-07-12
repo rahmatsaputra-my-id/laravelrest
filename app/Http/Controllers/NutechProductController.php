@@ -220,7 +220,7 @@ class NutechProductController extends Controller
                   return response()->json($errors, 400);
                }
             }
-            $nutechProduct = NutechProduct::orderBy('id', 'desc')->paginate(20);
+            $nutechProduct = NutechProduct::orderBy('id', 'desc')->paginate((int) $request->get('per_page'));
             $custom = collect($dataSuccess);
             $pagination = $custom->merge($nutechProduct);
 
@@ -231,7 +231,7 @@ class NutechProductController extends Controller
       return response()->json($errorsRequestNull, 400);
    }
 
-   public function getNutechProductById($id)
+   public function getNutechProductById(Request $request, $id)
    {
       $errors = [
          'status' => ['messages' => ['subject' => 'failed', 'system' => 'Not Found', 'user' => 'Data Not Found'], 'code_detail' => 404],
@@ -246,7 +246,7 @@ class NutechProductController extends Controller
       if ($id != null) {
          if ($idRequest != null) {
 
-            $nutechProduct = NutechProduct::where('id', $id)->paginate(5);
+            $nutechProduct = NutechProduct::where('id', $id)->paginate((int) $request->get('per_page'));
             $custom = collect($dataSuccess);
             $pagination = $custom->merge($nutechProduct);
             return response()->json($pagination, 200);
@@ -364,7 +364,7 @@ class NutechProductController extends Controller
                   'url_to_image' => $pathDownload . $filenya->getClientOriginalName()
                ]);
                $filenya->move($pathUpload, $filenya->getClientOriginalName());
-               
+
                return response()->json($dataSuccess, 200);
             }
             return response()->json($errorsPut, 400);
