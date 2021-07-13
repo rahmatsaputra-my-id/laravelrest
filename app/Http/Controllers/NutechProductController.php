@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\NutechProduct;
 use Illuminate\Support\Facades\Validator;
-use Mockery\Undefined;
 
 class NutechProductController extends Controller
 {
