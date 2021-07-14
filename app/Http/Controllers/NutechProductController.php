@@ -25,28 +25,24 @@ class NutechProductController extends Controller
          'status' => ['messages' => ['subject' => 'success', 'system' => 'Created', 'user' => 'Successfully created'], 'code_detail' => 201],
          'meta' => ['http_status_code' => 200]
       ];
-      $errors = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your entity'], 'code_detail' => 422],
-         'meta' => ['http_status_code' => 400]
-      ];
       $errorsHeaders = [
          'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your headers'], 'code_detail' => 422],
          'meta' => ['http_status_code' => 400]
       ];
       $errorsProductName = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your product_name'], 'code_detail' => 422],
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your key Product Name'], 'code_detail' => 422],
          'meta' => ['http_status_code' => 400]
       ];
       $errorsPurchasePrice = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your purchase_price'], 'code_detail' => 422],
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your key Purchase Price'], 'code_detail' => 422],
          'meta' => ['http_status_code' => 400]
       ];
       $errorsSellingPrice = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your selling_price'], 'code_detail' => 422],
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your key Selling Price'], 'code_detail' => 422],
          'meta' => ['http_status_code' => 400]
       ];
       $errorsStock = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your stock'], 'code_detail' => 422],
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your key Stock'], 'code_detail' => 422],
          'meta' => ['http_status_code' => 400]
       ];
       $invalidFileUpload = [
@@ -54,15 +50,11 @@ class NutechProductController extends Controller
          'meta' => ['http_status_code' => 400]
       ];
       $invalidExtensionFile = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Forbidden Extension File', 'user' => 'Check your file extension'], 'code_detail' => 403],
-         'meta' => ['http_status_code' => 400]
-      ];
-      $nullFile = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Not Found', 'user' => 'Data Not Found'], 'code_detail' => 404],
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Forbidden Extension File', 'user' => 'Check your file extension (Only .jpg .png)'], 'code_detail' => 403],
          'meta' => ['http_status_code' => 400]
       ];
       $forbidSize = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Forbidden Size File', 'user' => 'Check your file size'], 'code_detail' => 403],
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Forbidden Size File', 'user' => 'Check your file size (Max 200kb)'], 'code_detail' => 403],
          'meta' => ['http_status_code' => 400]
       ];
 
@@ -78,7 +70,7 @@ class NutechProductController extends Controller
                      $filenya = $request->file('url_to_image');
 
                      if ($filenya != null) {
-                        
+
                         if (!$filenya->isValid()) {
                            return response()->json($invalidFileUpload, 400);
                         }
@@ -316,25 +308,37 @@ class NutechProductController extends Controller
          'meta' => ['http_status_code' => 200]
       ];
 
-      $errorsPut = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your entity'], 'code_detail' => 422],
-         'meta' => ['http_status_code' => 400]
-      ];
-
       $invalidExtensionFile = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Forbidden Extension File', 'user' => 'Check your file extension'], 'code_detail' => 403],
-         'meta' => ['http_status_code' => 400]
-      ];
-      $nullFile = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Not Found', 'user' => 'Data Not Found'], 'code_detail' => 404],
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Forbidden Extension File', 'user' => 'Check your file extension (Only .jpg .png)'], 'code_detail' => 403],
          'meta' => ['http_status_code' => 400]
       ];
       $forbidSize = [
-         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Forbidden Size File', 'user' => 'Check your file size'], 'code_detail' => 403],
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Forbidden Size File', 'user' => 'Check your file size (Max 200kb)'], 'code_detail' => 403],
          'meta' => ['http_status_code' => 400]
       ];
       $invalidFileUpload = [
          'status' => ['messages' => ['subject' => 'failed', 'system' => 'Invalid File Upload', 'user' => 'Check your file terms and condition before upload'], 'code_detail' => 400],
+         'meta' => ['http_status_code' => 400]
+      ];
+
+      $errorsHeaders = [
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your headers'], 'code_detail' => 422],
+         'meta' => ['http_status_code' => 400]
+      ];
+      $errorsProductName = [
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your key Product Name'], 'code_detail' => 422],
+         'meta' => ['http_status_code' => 400]
+      ];
+      $errorsPurchasePrice = [
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your key Purchase Price'], 'code_detail' => 422],
+         'meta' => ['http_status_code' => 400]
+      ];
+      $errorsSellingPrice = [
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your key Selling Price'], 'code_detail' => 422],
+         'meta' => ['http_status_code' => 400]
+      ];
+      $errorsStock = [
+         'status' => ['messages' => ['subject' => 'failed', 'system' => 'Unprocessable Entity', 'user' => 'Check your key Stock'], 'code_detail' => 422],
          'meta' => ['http_status_code' => 400]
       ];
 
@@ -343,65 +347,83 @@ class NutechProductController extends Controller
 
       if ($id != null) {
          if ($idRequest != null) {
-            if ($validator->fails()) {
-               return response()->json($failedCreate, 400);
+
+            if ($request->hasHeader('Content-Type')) {
+               if ($request->get('product_name') != null) {
+                  if ($request->get('purchase_price') != null) {
+                     if ($request->get('selling_price') != null) {
+                        if ($request->get('stock') != null) {
+                           if ($validator->fails()) {
+                              return response()->json($failedCreate, 400);
+                           }
+
+                           $filenya = $request->file('url_to_image');
+
+                           if ($filenya != null) {
+                              // return response()->json($nullFile, 400);
+
+
+                              if (!$filenya->isValid()) {
+                                 return response()->json($invalidFileUpload, 400);
+                              }
+
+                              // buat local
+                              $pathUpload = public_path() . "/public/file";
+                              $pathDownload = public_path() . "/public/file";
+
+                              // buat staging
+                              // $pathUpload = public_path() . '/public/file';
+                              // $pathDownload = "https://staging.rahmatsaputra.my.id" . "/app/public/file/";
+
+                              if (
+                                 $filenya->getClientOriginalExtension() != 'jpg' &&
+                                 $filenya->getClientOriginalExtension() != 'png'
+                              ) {
+                                 return response()->json($invalidExtensionFile, 400);
+                              }
+
+                              $satuByte = 1024;
+                              // $satuKB = 1 * $satuByte;
+                              // $sepuluhKB = 10 * $satuByte;
+                              $seratusKB = 100 * $satuByte;
+                              // $satuMB = 1000 * $satuByte;
+
+                              if ($filenya->getSize() > (2 * $seratusKB)) {
+                                 return response()->json($forbidSize, 400);
+                              }
+
+                              $nutechProductData = NutechProduct::findOrFail($id);
+                              $nutechProductData->update([
+                                 'product_name' => $request->get('product_name'),
+                                 'purchase_price' => $request->get('purchase_price'),
+                                 'selling_price' => $request->get('selling_price'),
+                                 'stock' => $request->get('stock'),
+                                 'image_name' => $filenya->getClientOriginalName(),
+                                 'url_to_image' => $pathDownload . $filenya->getClientOriginalName()
+                              ]);
+                              $filenya->move($pathUpload, $filenya->getClientOriginalName());
+                              return response()->json($dataSuccess, 200);
+                           }
+
+                           $nutechProductData = NutechProduct::findOrFail($id);
+                           $nutechProductData->update([
+                              'product_name' => $request->get('product_name'),
+                              'purchase_price' => $request->get('purchase_price'),
+                              'selling_price' => $request->get('selling_price'),
+                              'stock' => $request->get('stock')
+                           ]);
+
+                           return response()->json($dataSuccess, 200);
+                        }
+                        return response()->json($errorsStock, 400);
+                     }
+                     return response()->json($errorsSellingPrice, 400);
+                  }
+                  return response()->json($errorsPurchasePrice, 400);
+               }
+               return response()->json($errorsProductName, 400);
             }
-
-            if (
-               $request->get('product_name') != null &&
-               $request->get('purchase_price') != null &&
-               $request->get('selling_price') != null &&
-               $request->get('stock') != null
-            ) {
-               $filenya = $request->file('url_to_image');
-
-               if ($filenya == null) {
-                  return response()->json($nullFile, 400);
-               }
-
-               if (!$filenya->isValid()) {
-                  return response()->json($invalidFileUpload, 400);
-               }
-
-               // buat local
-               $pathUpload = public_path() . "/public/file";
-               $pathDownload = public_path() . "/public/file";
-
-               // buat staging
-               // $pathUpload = public_path() . '/public/file';
-               // $pathDownload = "https://staging.rahmatsaputra.my.id" . "/app/public/file/";
-
-               if (
-                  $filenya->getClientOriginalExtension() != 'jpg' &&
-                  $filenya->getClientOriginalExtension() != 'png'
-               ) {
-                  return response()->json($invalidExtensionFile, 400);
-               }
-
-               $satuByte = 1024;
-               // $satuKB = 1 * $satuByte;
-               // $sepuluhKB = 10 * $satuByte;
-               $seratusKB = 100 * $satuByte;
-               // $satuMB = 1000 * $satuByte;
-
-               if ($filenya->getSize() > (2 * $seratusKB)) {
-                  return response()->json($forbidSize, 400);
-               }
-
-               $nutechProductData = NutechProduct::findOrFail($id);
-               $nutechProductData->update([
-                  'product_name' => $request->get('product_name'),
-                  'purchase_price' => $request->get('purchase_price'),
-                  'selling_price' => $request->get('selling_price'),
-                  'stock' => $request->get('stock'),
-                  'image_name' => $filenya->getClientOriginalName(),
-                  'url_to_image' => $pathDownload . $filenya->getClientOriginalName()
-               ]);
-               $filenya->move($pathUpload, $filenya->getClientOriginalName());
-
-               return response()->json($dataSuccess, 200);
-            }
-            return response()->json($errorsPut, 400);
+            return response()->json($errorsHeaders, 400);
          }
          return response()->json($errors, 400);
       }
