@@ -360,8 +360,6 @@ class NutechProductController extends Controller
                            $filenya = $request->file('url_to_image');
 
                            if ($filenya != null) {
-                              // return response()->json($nullFile, 400);
-
 
                               if (!$filenya->isValid()) {
                                  return response()->json($invalidFileUpload, 400);
