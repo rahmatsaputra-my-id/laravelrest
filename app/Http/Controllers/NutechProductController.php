@@ -81,7 +81,7 @@ class NutechProductController extends Controller
 
                         // buat staging
                         // $pathUpload = public_path() . '/public/file';
-                        // $pathDownload = "https://staging.rahmatsaputra.my.id" . "/app/public/file/";
+                        // $pathDownload = "https://api.rahmatsaputra.my.id" . "/app/public/file/";
 
                         if (
                            $filenya->getClientOriginalExtension() != 'jpg' &&
@@ -373,7 +373,7 @@ class NutechProductController extends Controller
 
                               // buat staging
                               // $pathUpload = public_path() . '/public/file';
-                              // $pathDownload = "https://staging.rahmatsaputra.my.id" . "/app/public/file/";
+                              // $pathDownload = "https://api.rahmatsaputra.my.id" . "/app/public/file/";
 
                               if (
                                  $filenya->getClientOriginalExtension() != 'jpg' &&
