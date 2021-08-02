@@ -313,7 +313,7 @@ class BookController extends Controller
 
 					//buat staging
 					$path = public_path() . '/';
-					$pathSave = "https://staging.rahmatsaputra.my.id" . "/public/";
+					$pathSave = "https://api.rahmatsaputra.my.id" . "/public/";
 
 					if (
 						$filenya->getClientOriginalExtension() != 'jpg' &&
